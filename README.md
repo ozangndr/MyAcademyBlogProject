@@ -46,4 +46,41 @@
 - 🤖 **AI Destekli Yorum Kontrolü**  
   - Kullanıcı yorumları AI ile analiz edilir.  
   - Toxic veya uygunsuz içerik tespit edilirse kullanıcıya uyarı gösterilir.  
-  - Admin panelinde yorum istatistikleri ve raporları takip edilebilir.  
+  - Admin panelinde yorum istatistikleri ve raporları takip edilebilir.
+ 
+### 🛠️ Kullanılan Teknolojiler
+---------------------------------------------------------------------
+- **💻 Backend**  
+  - C# ve **ASP.NET Core** ile API ve iş mantığı geliştirme  
+  - Katmanlı mimari: **Business**, **DataAccess**, **Entity**  
+
+- **🗄️ Veri Tabanı**  
+  - **SQL Server** ile ilişkisel veri yönetimi  
+  - Entity Framework Core ile ORM desteği  
+
+- **🌐 Frontend**  
+  - **Razor Pages / MVC** ile dinamik web sayfaları  
+  - **Bootstrap 5** ile responsive tasarım  
+  - JavaScript ve jQuery ile etkileşimli UI  
+
+- **🤖 Yapay Zeka ve API**  
+  - **OpenAI API** ile makale önerileri ve içerik üretimi  
+  - AI tabanlı yorum kontrolü ve toxiclik analizi  
+
+- **🔐 Güvenlik ve Yönetim**  
+  - Çevresel değişkenler üzerinden **API Key yönetimi**  
+  - Rol tabanlı erişim: Admin, Writer, User  
+
+- **📦 Proje Yönetimi ve Versiyon Kontrolü**  
+  - **Git & GitHub** ile sürüm kontrolü  
+  - GitHub Push Protection ile gizli anahtarların korunması  
+
+- **🧪 Test ve Performans**  
+  - Unit Test ile iş mantığı doğrulaması  
+  - Dashboard üzerinden performans ve içerik istatistikleri  
+
+- **⚡ Ek Araçlar**  
+  - Visual Studio 2022 / VSCode ile geliştirme  
+  - NuGet paketleri ile bağımlılık yönetimi  
+
+
