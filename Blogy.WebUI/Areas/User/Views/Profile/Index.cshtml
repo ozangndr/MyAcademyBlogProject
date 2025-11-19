@@ -1,0 +1,67 @@
+﻿@model EditProfileDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/User/Views/User/UserLayout.cshtml";
+}
+
+
+<h1>Profil Güncelle</h1>
+<div class="card text-center ">
+    <div class="card-title">
+        <h3>Mevcut Profil Fotoğrafınız</h3>
+    </div>
+    <div class="card-body">
+
+        <img src="@Model.ImageUrl" class="img-fluid rounded-circle" style="width: 100px; height: 100px;" alt="Profil Fotoğrafı" />
+    </div>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-6">
+            <label>Profil Fotoğrafı Seçiniz</label>
+            <input type="file" asp-for="ImageFile" class="form-control" />
+
+
+            <label>Ad</label>
+            <input type="text" asp-for="FirstName" class="form-control" required />
+            <br />
+            <label>Soyad</label>
+            <input type="text" asp-for="LastName" class="form-control" required />
+            <br />
+            <label>Kullanıcı Adı</label>
+            <input type="text" asp-for="UserName" class="form-control" required />
+            <br />
+
+
+        </div>
+
+        <div class="col-6">
+            <label>Email</label>
+            <input type="email" asp-for="Email" class="form-control" required />
+            <br />
+            <label>Ünvan</label>
+            <input type="text" asp-for="Title" class="form-control" />
+            <br />
+            <label>Telefon</label>
+            <input type="text" asp-for="PhoneNumber" class="form-control" />
+            <br />
+
+            <input type="hidden" asp-for="ImageUrl" class="form-control" />
+
+        </div>
+        <div class="col-6">
+            <label>Bilgileri Güncelemek için Mevcut Şifrenizi Girin</label>
+            <input type="password" asp-for="CurrentPassword" class="form-control" required />
+        </div>
+        <br />
+        <span class="text-danger">@Html.ValidationSummary()</span>
+        <button type="submit" class="btn btn-primary">Bilgileri Güncelle</button>
+    </div>
+
+</form>
+
+
+
+
+

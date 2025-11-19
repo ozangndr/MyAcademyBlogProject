@@ -1,36 +1,23 @@
-using Blogy.Business.Mappings;
-using Blogy.Business.Services.BlogServices;
-using Blogy.Business.Services.CategoryServices;
-using Blogy.Business.Validators.CategoryValidators;
-using Blogy.DataAccess.Context;
-using Blogy.DataAccess.Repositories.BlogRepositories;
-using Blogy.DataAccess.Repositories.BlogTagRepositories;
-using Blogy.DataAccess.Repositories.CategoryRepositories;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.EntityFrameworkCore;
+using Blogy.Business.Extensions;
+using Blogy.Business.Services.AiServices;
+using Blogy.DataAccess.Extensions;
+using Blogy.WebUI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<AIService>();
 // Add services to the container.
+builder.Services.AddServicesExt();
+builder.Services.AddRepositoriesExt(builder.Configuration);
 
-builder.Services.AddAutoMapper(typeof(CategoryMappings).Assembly);
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters().AddValidatorsFromAssembly(typeof(CreateCategoryValidator).Assembly);
-
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-
-builder.Services.AddScoped<IBlogRepository, BlogRepository>();
-builder.Services.AddScoped<IBlogService, BlogService>();
-
-builder.Services.AddScoped<IBlogTagRepository, BlogTagRepository>();
-
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddControllersWithViews(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.Filters.Add<ValidationExceptionFilter>();
 });
-
-builder.Services.AddControllersWithViews();
+builder.Services.ConfigureApplicationCookie(config =>
+{
+    config.LoginPath = "/Login/Index";
+});
 
 var app = builder.Build();
 
@@ -46,7 +33,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

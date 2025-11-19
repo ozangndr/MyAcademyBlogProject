@@ -1,0 +1,75 @@
+﻿@model RegisterDto
+@{
+    ViewData["Title"] = "Yeni Kullanıcı Kaydı";
+    Layout = "~/Views/UILayout/Index.cshtml";
+
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white text-center rounded-top-4">
+                    <h4 class="mb-0"><i class="bi bi-person-plus me-2"></i>Yeni Kullanıcı Kaydı</h4>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" asp-action="Index">
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label asp-for="FirsName" class="form-label">Adınız</label>
+                            <input asp-for="FirsName" class="form-control" placeholder="Adınızı girin" required />
+                            <span class="text-danger" asp-validation-for="FirsName"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="LastName" class="form-label">Soyadınız</label>
+                            <input asp-for="LastName" class="form-control" placeholder="Soyadınızı girin" required />
+                            <span class="text-danger" asp-validation-for="LastName"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="UserName" class="form-label">Kullanıcı Adınız</label>
+                            <input asp-for="UserName" class="form-control" placeholder="Kullanıcı adınızı girin" required />
+                            <span class="text-danger" asp-validation-for="UserName"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email Adresiniz</label>
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Email adresinizi girin" required />
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Şifreniz</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Şifrenizi girin" required />
+                            <span class="text-danger" asp-validation-for="Password"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label">Şifreyi Tekrar Girin</label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Şifrenizi tekrar girin" required />
+                            <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                        </div>
+
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-circle me-1"></i> Kayıt Ol
+                            </button>
+                        </div>
+
+                        <div class="mt-3 text-center text-danger">
+                            @Html.ValidationSummary()
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+

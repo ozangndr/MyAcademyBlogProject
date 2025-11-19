@@ -1,13 +1,21 @@
 ﻿using Blogy.Business.DTOs.BlogDtos;
+using Blogy.Business.DTOs.CommentDtos;
 using Blogy.Business.Services.BlogServices;
 using Blogy.Business.Services.CategoryServices;
+using Blogy.Business.Services.CommentServices;
+using Blogy.Entity.Entities;
+using Blogy.WebUI.Consts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogy.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class BlogController(IBlogService _blogService, ICategoryService _categoryService) : Controller
+    [Authorize(Roles =$"{Roles.Admin}")]
+    public class BlogController(IBlogService _blogService, ICategoryService _categoryService,UserManager<AppUser> _userManager) : Controller
     {
         private async Task GetCategoriesAsync()
         {
@@ -21,7 +29,8 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var blogs = await _blogService.GetBlogsWithCategoriesAsync();
+
+            var blogs = await _blogService.GetAllAsync();
             return View(blogs);
         }
 
@@ -35,11 +44,14 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBlog(CreateBlogDto createBlogDto)
         {
+            
             if (!ModelState.IsValid)
             {
                 await GetCategoriesAsync();
                 return View(createBlogDto);
             }
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            createBlogDto.WriterId = user.Id;
             await _blogService.CreateAsync(createBlogDto);
             return RedirectToAction(nameof(Index));
         }
@@ -66,10 +78,14 @@ namespace Blogy.WebUI.Areas.Admin.Controllers
                 await GetCategoriesAsync();
                 return View(updateBlogDto);
             }
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            updateBlogDto.WriterId = user.Id;
             await _blogService.UpdateAsync(updateBlogDto);
             return RedirectToAction(nameof(Index));
 
 
         }
+
+       
     }
 }

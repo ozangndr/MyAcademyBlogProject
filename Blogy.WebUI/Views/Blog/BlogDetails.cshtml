@@ -1,0 +1,173 @@
+﻿@model ResultBlogDto
+@{
+    ViewData["Title"] = "BlogDetails";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url('@Model.CoverImage');">
+    <div class="container">
+        <div class="row same-height justify-content-center">
+            <div class="col-md-6">
+                <div class="post-entry text-center">
+                    <h1 class="mb-4">@Model.Title</h1>
+                    <div class="post-meta align-items-center text-center">
+                        <figure class="author-figure mb-0 me-3 d-inline-block"><img src="@Model.Writer.ImageUrl" alt="Image" class="img-fluid"></figure>
+                        <span class="d-inline-block mt-1">@Model.Writer.FullName</span>
+                        <span>&nbsp;-&nbsp; @Model.CreatedDate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+
+        <div class="row blog-entries element-animate">
+
+            <div class="col-md-12 col-lg-8 main-content">
+
+                <div class="post-content-body">
+
+                    <div class="row my-4">
+                        <div class="col-md-12 mb-4">
+                            <img src="@Model.CoverImage" alt="Image placeholder" class="img-fluid rounded">
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <img src="@Model.BlogImage1" alt="Image placeholder" class="img-fluid rounded">
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <img src="@Model.BlogImage2" alt="Image placeholder" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    <p>@Model.Description</p>
+                </div>
+
+
+                <div class="pt-5">
+                    <p>Kategori:  <a href="#">@Model.Category.Name</a>  </p>
+                </div>
+
+
+                <div class="pt-5 comment-wrap">
+                    <h3 class="mb-5 heading">@Model.Comments.Count Yorum</h3>
+                    <ul class="comment-list">
+                        @foreach (var item in Model.Comments)
+                        {
+                            <li class="comment">
+                                <div class="vcard">
+                                    <img src="@item.User.ImageUrl" alt="Image placeholder">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>@item.User.FullName</h3>
+                                    <div class="meta">@item.CreatedDate</div>
+                                    <p>@item.Content</p>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                    <!-- END comment-list -->
+
+
+                    <div class="comment-form-wrap pt-5">
+                        @if (TempData["CommentError"] != null)
+                        {
+                            <div class="alert alert-danger">
+                                @TempData["CommentError"]
+                            </div>
+                        }
+
+                        <h3 class="mb-5 @(User.Identity.IsAuthenticated ? "text-success" : "text-danger")">
+                            @(User.Identity.IsAuthenticated
+                                                        ? "🔓 Bloğuma Yorum Yapabilirsiniz"
+                                                        : "🔒 Yorum Yapabilmek İçin Giriş Yapmalısınız")
+                        </h3>
+
+                        <form asp-action="CreateComment" asp-controller="Blog" method="post" class="p-5 bg-light">
+                            <!-- Hangi bloga yorum yapıldığını bilmek için hidden -->
+                            <input type="hidden" name="BlogId" value="@Model.Id" />
+                            <!-- Giriş yapmış kullanıcı id'si -->
+                            <input type="hidden" name="UserId" value="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value" />
+
+                            <div class="form-group">
+                                <label for="message">Mesaj *</label>
+                                <textarea name="Content" id="message" cols="30" rows="10" class="form-control" required></textarea>
+                            </div>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="form-group">
+                                    <input type="submit" value="Yorum Gönder" class="btn btn-primary">
+                                </div>
+                            }
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- END main-content -->
+
+            <div class="col-md-12 col-lg-4 sidebar">
+                <div class="sidebar-box search-form-wrap">
+                    <form action="#" class="sidebar-search-form">
+                        <span class="bi-search"></span>
+                        <input type="text" class="form-control" id="s" placeholder="Type a keyword and hit enter">
+                    </form>
+                </div>
+
+                <div class="sidebar-box">
+                    <h3 class="heading">Son 3 Blog</h3>
+                    <div class="post-entry-sidebar">
+                        <ul>
+                            @foreach (var item in ViewBag.Last3Blogs)
+                            {
+                                <li>
+                                    <a href="">
+                                        <img src="@item.CoverImage" alt="Image placeholder" class="me-4 rounded">
+                                        <div class="text">
+                                            <h4>@item.Title</h4>
+                                            <div class="post-meta">
+                                                <span class="mr-2">@item.CreatedDate </span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <!-- END sidebar-box -->
+
+                <div class="sidebar-box">
+                    <h3 class="heading">Categories</h3>
+                    <ul class="categories">
+                        @foreach (var kvp in ViewBag.BlogCountByCategory)
+                        {
+                            <li>
+                                <a href="#">@kvp.Key <span>(@kvp.Value)</span></a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+                <!-- END sidebar-box -->
+
+                <div class="sidebar-box">
+                    <h3 class="heading">Tags</h3>
+                    <ul class="tags">
+                        @foreach (var item in Model.BlogTags)
+                        {
+                            <li><a href="#">@item.Tag.Name</a></li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+            <!-- END sidebar -->
+
+        </div>
+    </div>
+</section>

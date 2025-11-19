@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using Blogy.Business.DTOs.BlogDtos;
 using Blogy.Entity.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Blogy.Business.Mappings
 {
@@ -16,6 +11,7 @@ namespace Blogy.Business.Mappings
             CreateMap<Blog, CreateBlogDto>().ReverseMap();
             CreateMap<Blog, UpdateBlogDto>().ReverseMap();
             CreateMap<Blog, ResultBlogDto>().ReverseMap();
+            CreateMap<UpdateBlogDto, ResultBlogDto>().ReverseMap();
         }
 
       

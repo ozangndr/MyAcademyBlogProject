@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blogy.Business.DTOs.BlogDtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,7 @@ namespace Blogy.Business.DTOs.CategoryDtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public IList<ResultBlogDto> Blogs { get; set; }
     }
 }

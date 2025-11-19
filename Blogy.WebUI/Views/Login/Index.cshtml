@@ -1,0 +1,161 @@
+﻿@model LoginDto
+@{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = null;
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #5e60ce, #5390d9, #56cfe1);
+        background-size: 400% 400%;
+        animation: gradientMove 12s ease infinite;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+    }
+
+    .login-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 25px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        padding: 50px 45px;
+        width: 100%;
+        max-width: 500px;
+        animation: fadeIn 0.7s ease-in-out;
+    }
+
+        .login-card h2 {
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #3f37c9;
+            font-size: 2rem;
+        }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 15px 15px 15px 45px;
+        font-size: 1.1rem;
+    }
+
+    .position-relative i {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #6c63ff;
+        font-size: 1.3rem;
+    }
+
+    .btn-primary {
+        background-color: #6c63ff;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        padding: 12px;
+        transition: 0.3s;
+        width: 100%;
+    }
+
+        .btn-primary:hover {
+            background-color: #574fd8;
+        }
+
+    .btn-secondary {
+        background-color: #adb5bd;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        padding: 12px;
+        transition: 0.3s;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+        .btn-secondary:hover {
+            background-color: #868e96;
+        }
+
+    .btn-success {
+        background-color: #3f37c9;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        padding: 12px;
+        transition: 0.3s;
+        width: 100%;
+        margin-top: 10px;
+        color: #fff;
+    }
+
+        .btn-success:hover {
+            background-color: #5e60ce;
+        }
+
+    .text-danger {
+        font-size: 1rem;
+        text-align: center;
+        display: block;
+        margin-top: 10px;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes gradientMove {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+</style>
+
+<div class="login-card">
+    <h2>🔒 Kullanıcı Girişi</h2>
+
+    <form method="post">
+        <div class="mb-4 position-relative">
+            <i class="bi bi-person-fill"></i>
+            <input type="text" asp-for="UserName" class="form-control" placeholder="Kullanıcı Adı" required />
+        </div>
+
+        <div class="mb-4 position-relative">
+            <i class="bi bi-lock-fill"></i>
+            <input type="password" asp-for="Password" class="form-control" placeholder="Şifre" required />
+        </div>
+
+        <span class="text-danger">@Html.ValidationSummary()</span>
+
+        <button type="submit" class="btn btn-primary mt-3">Giriş Yap</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <!-- Kayıt Ol butonu -->
+        <a href="/Register/Index/" class="btn btn-success">📝 Kayıt Ol</a>
+
+        <!-- Ana Sayfaya Dön butonu -->
+        <a href="/Default/Index" class="btn btn-secondary">🏠 Ana Sayfaya Dön</a>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">

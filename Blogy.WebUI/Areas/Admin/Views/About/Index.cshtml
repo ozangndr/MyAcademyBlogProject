@@ -1,0 +1,69 @@
+﻿
+@model ResultAboutDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-header bg-dark text-white py-3 rounded-top-4">
+            <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Hakkımızda Bilgilerini Güncelle</h4>
+        </div>
+
+        <div class="card-body p-4">
+            <form asp-action="UpdateAbout" method="post" enctype="multipart/form-data">
+                <!-- Başlık -->
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show mt-3 shadow-sm" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i>@TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                <input type="hidden" asp-for="Id"/>
+                <div class="mb-4">
+                    <label asp-for="Baslik" class="form-label fw-semibold">Başlık</label>
+                    <input asp-for="Baslik" class="form-control form-control-lg" placeholder="Başlık giriniz..." />
+                    <span asp-validation-for="Baslik" class="text-danger small"></span>
+                </div>
+
+                <!-- İçerik -->
+                <div class="mb-4">
+                    <label asp-for="Icerik" class="form-label fw-semibold">İçerik</label>
+                    <textarea asp-for="Icerik" class="form-control form-control-lg" rows="10" placeholder="Hakkımızda içeriğini giriniz..."></textarea>
+                    <span asp-validation-for="Icerik" class="text-danger small"></span>
+                </div>
+
+                <!-- Görsel URL -->
+                <div class="mb-4">
+                    <label asp-for="GorselUrl" class="form-label fw-semibold">Görsel URL</label>
+                    <input asp-for="GorselUrl" class="form-control form-control-lg" placeholder="Görsel bağlantısı veya dosya yolu giriniz..." />
+                    <span asp-validation-for="GorselUrl" class="text-danger small"></span>
+                </div>
+
+                <!-- Görsel Önizleme -->
+                @if (!string.IsNullOrEmpty(Model.GorselUrl))
+                {
+                    <div class="mb-4 text-center">
+                        <p class="fw-semibold mb-2">Mevcut Görsel:</p>
+                        <img src="@Model.GorselUrl" alt="Hakkımızda Görseli" class="img-fluid rounded-3 shadow-sm" style="max-height: 250px;" />
+                    </div>
+                }
+
+                <!-- Butonlar -->
+                <div class="d-flex justify-content-end">
+                    
+                    <button type="submit" class="btn btn-dark btn-lg rounded-pill shadow-sm">
+                        <i class="bi bi-save2"></i> Güncelle
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+

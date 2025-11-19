@@ -1,0 +1,53 @@
+﻿@model List<ResultCommentDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+    int count = 0;
+}
+
+
+
+<div class="container mt-4">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="bi bi-tags-fill me-2"></i>Yorum Listesi</h4>
+            <a href="/Admin/Comment/CreateComment" class="btn btn-light btn-sm fw-semibold">
+                <i class="bi bi-plus-circle"></i> Yeni Yorum
+            </a>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width: 60px;">#</th>
+                        <th>BlogId</th>
+                        <th>Yorum İçeriği</th>
+                        <th class="text-center" style="width: 180px;">İşlemler</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td class="fw-semibold">@count</td>
+                            <td class="fw-normal">@item.BlogId</td>
+                            <td class="fw-normal">@item.Content</td>
+                            <td class="text-center">
+                                <a href="/Admin/Comment/UpdateComment/@item.Id" class="btn btn-sm btn-outline-primary me-1">
+                                    <i class="bi bi-pencil-square"></i> Güncelle
+                                </a>
+                                <a href="/Admin/Comment/DeleteComment/@item.Id" class="btn btn-sm btn-outline-danger swal-delete">
+                                    <i class="bi bi-trash3"></i> Sil
+                                </a>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

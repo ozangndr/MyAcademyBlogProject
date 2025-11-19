@@ -1,0 +1,41 @@
+﻿@model Blogy.WebUI.ViewComponents.UserSummaryViewModel
+
+
+@if (Model != null && !string.IsNullOrEmpty(Model.UserName))
+{
+    <div class="d-flex align-items-center">
+        <!-- Profil Resmi -->
+        <img src="@(string.IsNullOrEmpty(Model.ImageUrl)
+                                  ? Url.Content("~/images/default-avatar.png")
+                                               : Model.ImageUrl)"
+         alt="Profil" class="rounded-circle me-2" width="38" height="38" style="object-fit:cover;" />
+
+        <!-- Kullanıcı Adı ve Rol -->
+        <div class="d-flex flex-column">
+            <small class="text-white fw-bold">@(!string.IsNullOrEmpty(Model.FullName) ? Model.FullName : Model.UserName)</small>
+            <small class="text-muted">@Model.Role</small>
+        </div>
+
+        <!-- Logout Formu -->
+    @{
+            string role = Model.Role?.ToLowerInvariant() ?? "";
+            string area = role switch
+            {
+                "admin" => "Admin",
+                "writer" => "Writer",
+                _ => "" // normal user veya diğer roller
+            };
+        }
+
+        <form method="post" asp-controller="Users" asp-action="Logout" asp-area="@area" class="ms-3">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-light btn-sm">
+                <i class="bi bi-box-arrow-right"></i> Çıkış
+            </button>
+        </form>
+    </div>
+}
+else
+{
+    <span class="text-muted small">Giriş yapılmamış</span>
+}

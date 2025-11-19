@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+@{
+    var chartData = ViewBag.BlogCountByCategory as Dictionary<string, int>;
+}
+
+<h2>Kategori Blog Grafiği</h2>
+
+<div style="width: 400px; margin: auto;">
+    <canvas id="categoryChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    var labels = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(chartData.Keys));
+    var values = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(chartData.Values));
+
+    var ctx = document.getElementById('categoryChart').getContext('2d');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Kategoriye Göre Blog Sayısı',
+                data: values,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+<h3 class="mt-4">Son Eklenenler</h3>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px;">
+
+    @foreach (var blog in ViewBag.LatestBlogs)
+    {
+        <div style="
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+                background: white;
+            ">
+
+            <!-- CoverImage -->
+            <div style="width: 100%; height: 150px; overflow: hidden;">
+                @if (!string.IsNullOrEmpty(blog.CoverImage))
+                {
+                    <img src="@blog.CoverImage"
+                         style="width: 100%; height: 100%; object-fit: cover;" />
+                }
+                else
+                {
+                    <div style="width: 100%; height: 100%; background: #eee; display:flex; align-items:center; justify-content:center; color:#555;">
+                        No Image
+                    </div>
+                }
+            </div>
+
+            <!-- Content -->
+            <div style="padding: 15px;">
+                <h4 style="font-size: 18px; margin-bottom: 8px;">@blog.Title</h4>
+
+                @if (!string.IsNullOrEmpty(blog.Description))
+                {
+                    <p style="color:#444; font-size: 14px;">
+                        @blog.Description.Substring(0, Math.Min(blog.Description.Length, 80))...
+                    </p>
+                }
+
+                <p style="color: gray; font-size: 13px; margin-top: 10px;">
+                    @blog.CreatedDate.ToString("dd MMMM yyyy")
+                </p>
+            </div>
+
+        </div>
+    }
+</div>
+
+
+<h3 class="mt-4">Son Eklenen 4 kullanıcı ve Rolleri</h3>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px;">
+
+    @foreach (var item in ViewBag.UsersWithRoles ?? new List<dynamic>())
+    {
+        var user = item.User;
+        var roles = item.Roles as List<string>;
+
+        <div style="
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                background: white;
+            ">
+            <h4 style="font-size: 18px; margin-bottom: 5px;">
+                @user.UserName
+            </h4>
+
+            <p style="margin: 0; color: #666;">
+                <strong>Rol:</strong> @string.Join(", ", roles)
+            </p>
+
+            
+        </div>
+    }
+
+</div>
+
+
+
+
+
+

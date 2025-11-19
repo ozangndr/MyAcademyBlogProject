@@ -1,0 +1,37 @@
+﻿@model ResultAboutDto
+@{
+    ViewData["Title"] = "Hakkımızda";
+    Layout = "~/Views/UILayout/Index.cshtml";
+}
+
+<section class="container my-5 py-5">
+    <div class="row align-items-center g-5">
+        <!-- Görsel Alanı -->
+        <div class="col-lg-5 col-md-6 text-center">
+            <div class="position-relative">
+                <img src="@Model.GorselUrl"
+                     alt="Hakkımızda Görseli"
+                     class="img-fluid rounded-4 shadow-lg animate__animated animate__fadeIn"
+                     style="object-fit: cover; max-height: 400px; transition: transform 0.4s ease;"
+                     onmouseover="this.style.transform='scale(1.05)'"
+                     onmouseout="this.style.transform='scale(1)'" />
+            </div>
+        </div>
+
+        <!-- Metin Alanı -->
+        <div class="col-lg-7 col-md-6">
+            <div class="about-content">
+                <h1 class="fw-bold mb-4 text-dark">@Model.Baslik</h1>
+                <p class="text-secondary fs-5 lh-lg mb-4">
+                    @Html.Raw(Model.Icerik)
+                </p>
+                <a href="/Contact/Index" class="btn btn-dark px-4 py-2 rounded-pill shadow-sm">
+                    Bizimle İletişime Geç
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hafif animasyonlar için (opsiyonel) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />

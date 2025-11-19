@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "AI Makale Oluştur";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
+}
+
+<h2>AI ile Makale Oluştur</h2>
+
+<div style="max-width: 800px; margin: auto; padding: 20px;">
+
+    <!-- Form Card -->
+    <div style="background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px;">
+        <form method="post" asp-action="Create">
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight:bold;">Anahtar Kelime:</label>
+                <input type="text" name="keyword" required class="form-control" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <label style="font-weight:bold;">Kısa Cümle:</label>
+                <input type="text" name="shortSentence" required class="form-control" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc;" />
+            </div>
+
+            <button type="submit" style="background-color:#4CAF50; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">
+                Makale Oluştur
+            </button>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <p style="color:red; margin-top:10px;">@ViewBag.Error</p>
+        }
+    </div>
+
+    <!-- Generated Article Card -->
+    @if (ViewBag.GeneratedArticle != null)
+    {
+        <div style="background-color:#f9f9f9; padding:20px; border-radius:10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+            <h3>Oluşturulan Makale</h3>
+            <p style="white-space: pre-wrap;">@ViewBag.GeneratedArticle</p>
+
+            <button id="copyBtn" style="margin-top:10px; background-color:#2196F3; color:white; padding:8px 16px; border:none; border-radius:5px; cursor:pointer;">
+                Kopyala
+            </button>
+        </div>
+    }
+</div>
+
+<script>
+    document.getElementById("copyBtn")?.addEventListener("click", function () {
+        const text = document.querySelector("div p").innerText;
+        navigator.clipboard.writeText(text).then(function () {
+            alert("Makale kopyalandı!");
+        });
+    });
+</script>
+
+

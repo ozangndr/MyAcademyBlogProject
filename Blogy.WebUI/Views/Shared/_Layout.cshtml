@@ -52,3 +52,28 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+<script>
+    document.querySelectorAll('.swal-delete').forEach(function(el){
+        el.addEventListener('click', function(e){
+            e.preventDefault(); // linkin hemen gitmesini engelle
+            const href = this.href; // silme linkini al
+
+            Swal.fire({
+                title: 'Emin misiniz?',
+                text: "Bu öğe kalıcı olarak silinecek!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Evet, sil!',
+                cancelButtonText: 'İptal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href; // onaylanırsa sil
+                }
+            })
+        });
+    });
+</script>

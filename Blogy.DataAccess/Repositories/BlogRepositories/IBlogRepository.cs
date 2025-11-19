@@ -11,5 +11,6 @@ namespace Blogy.DataAccess.Repositories.BlogRepositories
     public interface IBlogRepository:IGenericRepository<Blog>
     {
         Task<List<Blog>> GetBlogsWithCategoriesAsync();
+        Task<List<Blog>> GetLast3BlogAsync();
     }
 }

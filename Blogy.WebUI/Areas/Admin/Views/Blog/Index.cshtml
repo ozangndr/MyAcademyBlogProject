@@ -1,7 +1,7 @@
 ﻿@model List<ResultBlogDto>
 @{
     ViewData["Title"] = "Bloglar";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Admin/AdminLayout.cshtml";
     int count = 0;
 }
 
@@ -40,15 +40,14 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>@item.Description</td>
-                            <td>@item.Category?.Name</td>
+                            <td>@(item.Description.Length > 100 ? item.Description.Substring(0, 100)+"..." :item.Description )</td>
+                            <td>@item.Category.Name</td>
                             <td class="text-center">
                                 <a href="/Admin/Blog/UpdateBlog/@item.Id" class="btn btn-sm btn-outline-primary me-1">
                                     <i class="bi bi-pencil-square"></i> Güncelle
-                                </a>
-                                <a href="/Admin/Blog/DeleteBlog/@item.Id"
-                                   onclick="return confirm('Bu öğeyi kalıcı olarak silmek istediğinize emin misiniz?')"
-                                   class="btn btn-sm btn-outline-danger">
+                                </a>                             
+
+                                <a href="/Admin/Blog/DeleteBlog/@item.Id" class="btn btn-sm btn-outline-danger swal-delete">
                                     <i class="bi bi-trash3"></i> Sil
                                 </a>
                             </td>
