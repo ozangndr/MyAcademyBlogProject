@@ -81,6 +81,9 @@
 
 - **⚡ Ek Araçlar**  
   - Visual Studio 2022 / VSCode ile geliştirme  
-  - NuGet paketleri ile bağımlılık yönetimi  
-
-
+  - NuGet paketleri ile bağımlılık yönetimi
+ 
+  
+** Tanıtım Videosu** 
+------------------------------------------------
+https://drive.google.com/file/d/1LZYlAOyFdR0j9f8Fc7MAApIZMu0ofCpw/view?usp=drive_link
